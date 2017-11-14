@@ -1425,11 +1425,14 @@ void AddSC_PWS_Transmogrification(); // transmog
 void AddSC_CS_Transmogrification(); // transmog
 void AddSC_NPC_TransmogDisplayVendor(); // transmog
 
+//Go Move
+void AddSC_GOMove_commandscript(); // use an addon to move the objects!
+
+// reforge
+void AddSC_REFORGER_NPC(); // retail blizzlike reforger
 
 // killstreak
-void AddSC_script_killstreak_handling(); // kill steak yep!
-void AddSC_script_killstreak_example();  // kill steak yep!
-
+void AddSC_PvP_System(); // sends message every 10 kills
 
 // these are the pvp scripts
 void AddSC_TemplateNPC(); // template npc
@@ -1438,6 +1441,8 @@ void AddSC_fast_arena_start(); // makes arena start faster
 void AddSC_arenateamranks(); // shows team rating
 void AddSC_npc_1v1arena(); // 1v1 
 void AddSC_arena_spectator_script(); // arena
+void AddSC_npc_solo3v3(); // soloqueue 3v3
+void AddSC_Arena_AntiDraw(); // decreases damage after 6 min mark in arena not in bgs
 
 
 // These are the fun stuff scripts
@@ -1450,10 +1455,10 @@ void AddSC_cs_world_chat(); // worldchat
 void Add_SC_Custom_Rates(); // custom rate 
 void AddSC_npc_enchantment(); // enchantments npc
 void AddSC_Reset();// duel reset
-void AddSC_morpher_npc(); // this will morph you
 void AddSC_PhasedDueling(); // this will phase you, so you cannot see objects or any other players nor can they see you
 void AddSC_Professions_NPC(); // instant proffesions hype!
 void AddSC_multi_changer(); // can change name, race and customize your looks!
+void AddSC_Morpher_Npc();  // will morph player base on they choose
 //void AddSC_DruidHax(); // fix c issue
 //void AddSC_npc_blood_money(); // win gold!
 //void AddSC_Boss_Announcer(); // announces world boss kill
@@ -1468,10 +1473,15 @@ void AddCustomScripts()
 	AddSC_CS_Transmogrification(); // transmog
 	AddSC_NPC_TransmogDisplayVendor(); // transmog
 
+	//Go Move
+	AddSC_GOMove_commandscript(); // use an addon to move the objects!
+
+	// reforge
+	AddSC_REFORGER_NPC(); //retail blizzlike reforger
+
 
 	// killstreak
-	AddSC_script_killstreak_handling(); // kill steak yep!
-	AddSC_script_killstreak_example(); // kill steak yep!
+	AddSC_PvP_System(); // sends message every 10 kills
 
 
 	// these are the pvp scripts
@@ -1481,6 +1491,8 @@ void AddCustomScripts()
 	AddSC_arenateamranks(); // shows team rating
 	AddSC_npc_1v1arena(); // 1v1
 	AddSC_arena_spectator_script(); // arenaspecatator
+	AddSC_npc_solo3v3(); // soloqueue 3v3
+	AddSC_Arena_AntiDraw(); // decreases damage after 6 min mark in arena not in bgs
 
 
 	// These are the fun stuff scripts
@@ -1493,10 +1505,10 @@ void AddCustomScripts()
 	Add_SC_Custom_Rates(); // custom rate 
 	AddSC_npc_enchantment(); // enchantments npc
 	AddSC_Reset();// duel reset
-	AddSC_morpher_npc(); // this will morph you
 	AddSC_PhasedDueling(); // this will phase you, so you cannot see objects or any other players nor can they see you
 	AddSC_Professions_NPC(); // instant proffesions hype!
 	AddSC_multi_changer(); // can change name, race and customize your looks!
+	AddSC_Morpher_Npc();  // will morph player base on they choose
 	//AddSC_DruidHax(); // fix c issue
 	//AddSC_npc_blood_money(); // win gold!
 	//AddSC_Boss_Announcer(); // announces world boss kill

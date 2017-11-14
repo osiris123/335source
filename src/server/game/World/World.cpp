@@ -993,7 +993,14 @@ void World::LoadConfigSettings(bool reload)
 	m_bool_configs[CONFIG_QUEST_IGNORE_AUTO_COMPLETE] = sConfigMgr->GetBoolDefault("Quests.IgnoreAutoComplete", false);
 	// WorldChat
 	m_int_configs[CONFIG_WORLD_CHAT_ENABLED] = sConfigMgr->GetIntDefault("WorldChat.enabled", 1);
-	m_int_configs[CONFIG_WORLD_CHAT_MAP_ENABLED] = sConfigMgr->GetIntDefault("WorldChannel.ShowMapNames", 0);
+
+	//custom rate
+	m_int_configs[CONFIG_CUSTOM_RATE_XP_ENABLED] = sConfigMgr->GetIntDefault("CustomXpRate.enabled", 1);
+	m_int_configs[CONFIG_CUSTOM_RATE_LOOT_ENABLED] = sConfigMgr->GetIntDefault("CustomLootRate.enabled", 1);
+
+	// Custom PVP Spawns
+	m_int_configs[CONFIG_CUSTOM_PVP_SPAWN_ENABLED] = sConfigMgr->GetIntDefault("Custom.Gurubashi.Arena.enabled", 1); // Gurubashi Arena
+
 
 	m_int_configs[CONFIG_RANDOM_BG_RESET_HOUR] = sConfigMgr->GetIntDefault("Battleground.Random.ResetHour", 6);
 	if (m_int_configs[CONFIG_RANDOM_BG_RESET_HOUR] > 23)
@@ -1041,6 +1048,28 @@ void World::LoadConfigSettings(bool reload)
 	m_float_configs[CONFIG_LISTEN_RANGE_TEXTEMOTE] = sConfigMgr->GetFloatDefault("ListenRange.TextEmote", 25.0f);
 	m_float_configs[CONFIG_LISTEN_RANGE_YELL] = sConfigMgr->GetFloatDefault("ListenRange.Yell", 300.0f);
 
+	// soloqueue 3v3
+	m_bool_configs[CONFIG_SOLO_3V3_ENABLE] = sConfigMgr->GetBoolDefault("Solo.3v3.Enable", 1);
+	m_int_configs[CONFIG_SOLO_3V3_MIN_LEVEL] = sConfigMgr->GetIntDefault("Solo.3v3.MinLevel", 255);
+	m_int_configs[CONFIG_SOLO_3V3_COSTS] = sConfigMgr->GetIntDefault("Solo.3v3.Costs", 400000);
+	m_float_configs[CONFIG_SOLO_3V3_ARENAPOINTS_MULTI] = sConfigMgr->GetFloatDefault("Solo.3v3.ArenaPointsMulti", 0.64f);
+	m_bool_configs[CONFIG_SOLO_3V3_FILTER_TALENTS] = sConfigMgr->GetBoolDefault("Solo.3v3.FilterTalents", true);
+	m_bool_configs[CONFIG_SOLO_3V3_VENDOR_RATING] = sConfigMgr->GetBoolDefault("Solo.3v3.VendorRating", true);
+	m_bool_configs[CONFIG_ARENA_1V1_BLOCK_FORBIDDEN_TALENTS] = sConfigMgr->GetBoolDefault("Arena.1v1.BlockForbiddenTalents", true);
+	m_bool_configs[CONFIG_ARENA_CHECK_EQUIP_AND_TALENTS] = sConfigMgr->GetBoolDefault("Arena.CheckEquipAndTalents", true);
+	m_bool_configs[CONFIG_SOLO_3V3_CAST_DESERTER_ON_AFK] = sConfigMgr->GetBoolDefault("Solo.3v3.CastDeserterOnAfk", true);
+	m_bool_configs[CONFIG_SOLO_3V3_CAST_DESERTER_ON_LEAVE] = sConfigMgr->GetBoolDefault("Solo.3v3.CastDeserterOnLeave", true);
+	m_bool_configs[CONFIG_SOLO_3V3_STOP_GAME_INCOMPLETE] = sConfigMgr->GetBoolDefault("Solo.3v3.StopGameIncomplete", true);
+
+	// Dementia
+	m_bool_configs[CONFIG_DEMENTIA_ENABLE] = sConfigMgr->GetBoolDefault("Dementia.Enable", 1);
+
+	// Custom rates
+	m_int_configs[CONFIG_CUSTOM_LOOT_LEVEL] = sConfigMgr->GetIntDefault("CustomLoot.Level", 255);
+	m_int_configs[CONFIG_CUSTOM_XP_LEVEL] = sConfigMgr->GetIntDefault("CustomXp.Level", 255);
+
+
+
 	m_bool_configs[CONFIG_BATTLEGROUND_CAST_DESERTER] = sConfigMgr->GetBoolDefault("Battleground.CastDeserter", true);
 	m_bool_configs[CONFIG_BATTLEGROUND_QUEUE_ANNOUNCER_ENABLE] = sConfigMgr->GetBoolDefault("Battleground.QueueAnnouncer.Enable", false);
 	m_bool_configs[CONFIG_BATTLEGROUND_QUEUE_ANNOUNCER_PLAYERONLY] = sConfigMgr->GetBoolDefault("Battleground.QueueAnnouncer.PlayerOnly", false);
@@ -1064,8 +1093,7 @@ void World::LoadConfigSettings(bool reload)
 	m_bool_configs[CONFIG_ARENA_LOG_EXTENDED_INFO] = sConfigMgr->GetBoolDefault("ArenaLog.ExtendedInfo", false);
 
 	m_bool_configs[CONFIG_ARENA_1V1_ENABLE] = sConfigMgr->GetBoolDefault("Arena.1v1.Enable", true);
-	m_bool_configs[CONFIG_ARENA_1V1_ANNOUNCER] = sConfigMgr->GetBoolDefault("Arena.1v1.Announcer", false);
-	m_int_configs[CONFIG_ARENA_1V1_MIN_LEVEL] = sConfigMgr->GetIntDefault("Arena.1v1.MinLevel", 80);
+	m_int_configs[CONFIG_ARENA_1V1_MIN_LEVEL] = sConfigMgr->GetIntDefault("Arena.1v1.MinLevel", 255);
 	m_int_configs[CONFIG_ARENA_1V1_COSTS] = sConfigMgr->GetIntDefault("Arena.1v1.Costs", 400000);
 	m_bool_configs[CONFIG_ARENA_1V1_VENDOR_RATING] = sConfigMgr->GetBoolDefault("Arena.1v1.VendorRating", false);
 	m_float_configs[CONFIG_ARENA_1V1_ARENAPOINTS_MULTI] = sConfigMgr->GetFloatDefault("Arena.1v1.ArenaPointsMulti", 0.64f);
@@ -1206,6 +1234,7 @@ void World::LoadConfigSettings(bool reload)
 	m_int_configs[CONFIG_MAX_WHO] = sConfigMgr->GetIntDefault("MaxWhoListReturns", 49);
 	m_bool_configs[CONFIG_START_ALL_SPELLS] = sConfigMgr->GetBoolDefault("PlayerStart.AllSpells", false);
 	m_int_configs[CONFIG_HONOR_AFTER_DUEL] = sConfigMgr->GetIntDefault("HonorPointsAfterDuel", 0);
+	m_bool_configs[CONFIG_RESET_DUEL_COOLDOWNS] = sConfigMgr->GetBoolDefault("ResetDuelCooldowns", 0);
 	m_bool_configs[CONFIG_START_ALL_EXPLORED] = sConfigMgr->GetBoolDefault("PlayerStart.MapsExplored", false);
 	m_bool_configs[CONFIG_START_ALL_REP] = sConfigMgr->GetBoolDefault("PlayerStart.AllReputation", false);
 	m_bool_configs[CONFIG_ALWAYS_MAXSKILL] = sConfigMgr->GetBoolDefault("AlwaysMaxWeaponSkill", false);
@@ -1638,6 +1667,10 @@ void World::SetInitialWorldSettings()
 
 	TC_LOG_INFO("server.loading", "Loading UNIT_NPC_FLAG_SPELLCLICK Data..."); // must be after LoadQuests
 	sObjectMgr->LoadNPCSpellClickSpells();
+
+	TC_LOG_INFO("server.loading", "Loading Chat Filter Words...");
+	sObjectMgr->LoadChatFilter();
+
 
 	TC_LOG_INFO("server.loading", "Loading Vehicle Template Accessories...");
 	sObjectMgr->LoadVehicleTemplateAccessories();                // must be after LoadCreatureTemplates() and LoadNPCSpellClickSpells()

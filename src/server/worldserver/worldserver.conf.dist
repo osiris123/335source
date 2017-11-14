@@ -36,7 +36,8 @@
 #    TRANSMOGRIFICATION
 #	 CUSTOM RATE XP
 #	 WORLDHCAT
-#	 GUILD HOUSING
+#	 3v3
+#	 1v1
 #
 ###################################################################################################
 
@@ -2414,7 +2415,15 @@ Arena.ArenaStartMatchmakerRating = 1500
 
 ArenaLog.ExtendedInfo = 0
 
+#    Dementia.Enable
+#        Description: To Enable/Disable Dementia buff
+#        Default:     0 - (Disabled)
+#                     1 - (Enabled)
+
+Dementia.Enable = 1
+
 #
+
 ###################################################################################################
 
 ###################################################################################################
@@ -2606,6 +2615,14 @@ PlayerStart.MapsExplored = 0
 #                     1+ - (Enabled)
 
 HonorPointsAfterDuel = 0
+
+#
+#    ResetDuelCooldowns
+#        Description: Reset all cooldowns before duel starts and restore them when duel ends.
+#        Default:     0  - (Disabled)
+#                     1  - (Enabled)
+
+ResetDuelCooldowns = 0
 
 #
 #    AlwaysMaxWeaponSkill
@@ -3615,7 +3632,7 @@ Transmogrification.IgnoreReqSpell = 0
 Transmogrification.IgnoreReqLevel = 0
 Transmogrification.IgnoreReqEvent = 0
 Transmogrification.IgnoreReqStats = 0
-
+#
 #
 #    SET FEATURE
 #
@@ -3642,16 +3659,16 @@ Transmogrification.IgnoreReqStats = 0
 #    Transmogrification.SetCopperCost
 #        Description: Cost added on top of other costs (can be negative)
 #        Default:    0
-
+#
 Transmogrification.EnableSets = 1
 Transmogrification.MaxSets = 10
-
+#
 Transmogrification.EnableSetInfo = 1
 Transmogrification.SetNpcText = 50001
-
+#
 Transmogrification.SetCostModifier = 3.0
 Transmogrification.SetCopperCost = 0
-
+#
 #
 ###################################################################################################
 #
@@ -3672,20 +3689,20 @@ Transmogrification.SetCopperCost = 0
 #        Remarks    : Higher security accounts may set xp/loot rate to
 #                     lower security level accounts.
 #
-
+#
 Player.XpRateSecurity = 0
 Player.LootRateSecurity = 0
-
+#
 #    Player.MaximumXpRate
 #    Player.MaximumLootRate
 #        Description: Maximum individual XP / loot rate
 #        Values     : n (integer, may set xp / loot rate in range [1,n]
 #        Default    : 10
 #
-
+#
 Player.MaximumXpRate = 20
 Player.MaximumLootRate = 10
-
+#
 #    Player.ShowXpRateOnLogin
 #    Player.ShowLootRateOnLogin
 #        Description: Shows current XP / loot rate to player on login
@@ -3694,10 +3711,37 @@ Player.MaximumLootRate = 10
 #        Default    : 1
 #
 
+#	CustomXpRate.enabled
+#	CustomLootRate.enabled
+#        Description: Toggles disable/enable for Custom Rate Loot/Xp
+#        Values     : 1 - Enable
+#		 Values 	: 0 - Disable
+#        Default    : 1
+#
+CustomXpRate.enabled = 1
+CustomLootRate.enabled = 1
+#
+#    Player.ShowXpRateOnLogin
+#    Player.ShowLootRateOnLogin
+#        Description: Shows current XP / loot rate to player on login
+#        Values     : 0 - don't show
+#                   : 1 - show
+#        Default    : 1
+#
+#
 Player.ShowXpRateOnLogin = 1
 Player.ShowLootRateOnLogin = 1
-
 #
+#	CustomXp.Level
+#	CustomLoot.Level
+#	 Description: Allows user to get extra loot at level and xp
+#        Usage: 1-255
+#        Default    : 80
+#
+CustomLoot.Level = 80
+CustomXp.Level = 80
+#
+####################################################################################################
 ###################################################################################################
 #  WorldChat Settings
 #        WorldChat.enabled
@@ -3705,82 +3749,84 @@ Player.ShowLootRateOnLogin = 1
 #		 Usage: 0 = Disabled, 1 = Enabled
 WorldChat.enabled = 1
 #
-#		 WorldChat.Player.color
-#		 WorldChat.Staff.color
-#		 Description: Defines the player name color
-#		 Usage: Color code must be in Blizzards color system ex. RED = |cffFF0000
 #
-#		 WorldChat.text.color
-#		 Description: Defines the color of the message text.
-#		 Usage: Color code must be in Blizzards color sytem ex. RED = |cffFF0000
-WorldChat.text.color = "|cffFF0000"
-#		 WorldChat.command
-#		 Descript: Defines the command for the chat system
-#		 Usage: Use as string example. "world" NOTICE: WHEN YOU CHANGE COMMAND NAME INSERT IT INTO commands table which is located in World database
-#		 Default: "world"
-WorldChat.command = "chat"
+###################################################################################################
+###################################################################################################
 #
-#		 WorldChat.Player.color
-#		 WorldChat.Staff.color
-#		 Description: Defines player name tag colors, Staff color is applied when GM tag is on.
-#		 Usage: Color code must be in Blizzard color system ex. RED = |cffFF0000
+###################################################################################################
+#  3v3 Soloqueue 
+#        Solo.3v3.Enable
+#	     Description: Defines is the world chat enabled or disabled, default : Enabled
+#		 Usage: 0 = Disabled, 1 = Enabled
 #
-WorldChat.Player.color = "|c1f40af20"
-WorldChat.Staff.color = "|cff0404B4"
-#
-#		 WorldChannel.name
-#        Description: Defines the "channels" name ex. "[World]"
-#
-WorldChannel.name = "Global"
-#
-#        WorldChannel.name.color
-#        Description: Defines the color of Channels name
-#        Usage: Color code must be in Blizzards color system ex. RED = |cffFF0000
-#
-WorldChannel.name.color = "|cffFF0000"
-#
-#        WorldChannel.ShowMapNames
-#        Description: Defines if the world chat add extra field for player area location ex. [Tyr's Hand]
-#        Usage: 1 = Enabled, 0 = Disabled, 3 = Show Area name instead of Map name, Default = 0(Disabled)
-#
-WorldChannel.ShowMapNames = 3
-#
-#        Description: If ShowMapNames is enabled use these settings to define the color
-#        Usage: Color code must be in Blizzards color system ex. RED = |cffFF0000
+Solo.3v3.Enable = 1
 #
 #
-WorldChannel.Map.Color = ""
+#
+#  3v3 Soloqueue Cost
+#        Solo.3v3.Costs
+#	     Description: Gives value cost; 400000 is 40g
+#		 Usage: 0-400000 // 400k is 40g
+#
+Solo.3v3.Costs = 400000
+#
+#
+#  3v3 soloqueue
+#        Solo.3v3.MinLevel
+#	     Description: Change player level requirement to join 3v3 soloqueue arena
+#		 Usage: 1-255
+#
+Solo.3v3.MinLevel = 80
 #
 #
 ###################################################################################################
 ###################################################################################################
- 
-###################################################################################################
-# GuildHouse
+#  1v1
+#        Arena.1v1.Enable
+#	     Description: Defines is the world chat enabled or disabled, default : Enabled
+#		 Usage: 0 = Disabled, 1 = Enabled
 #
-# Settings for the GuildHouse Keeper.
+Arena.1v1.Enable = 1
 #
-#    Guildhouse.TokenOrGold
-#        Description: Use tokens or money to buy guild houses.
-#        Default:     0 - Use Money
-#                     1 - Use Token
 #
-
-Guildhouse.TokenOrGold = 0
-
-#    GuildHouse.BuyCost
-#        Description: Amount of gold or quantity of tokens to buy guildhouse.
-#        Default:     1000 - 1000 gold
 #
-
-Guildhouse.BuyCost = 1000
-
-#    GuildHouse.BuyCost
-#        Description: Amount of gold or quantity of tokens gained when selling guildhouse.
-#        Default:     5000000 - 500 gold
+#  1v1
+#        Arena.1v1.Enable
+#	     Description: Gives value cost; 400000 is 40g
+#		 Usage: 0-400000 // 400k is 40g
 #
-
-Guildhouse.SellCost = 500
-
+Arena.1v1.Costs = 400000
+#
+#
+#  1v1
+#        Arena.1v1.MinLevel
+#	     Description: Change player level requirement to join 1v1 arena
+#		 Usage: 1-255
+#
+Arena.1v1.MinLevel = 80
+#
 #
 ###################################################################################################
+###################################################################################################
+#
+# CROSSFACTION BG CONFIG
+#
+#    CrossfactionBG.enable = 1 - Mixed battleground enabled.
+#    CrossfactionBG.enable = 0 - Mixed battleground disabled.
+#
+CrossFactionSystem.Battlegrounds = 1
+#
+#
+###################################################################################################
+###################################################################################################
+#
+# CUSTOM PVP ZONE
+#
+#    Custom.Gurubashi.Arena.enabled = 1 - Custom Graveyard spawn at Gurubashi Arena enabled.
+#    Custom.Gurubashi.Arena.enabled = 0 - Custom Graveyard spawn at Gurubashi Arena disabled.
+#
+Custom.Gurubashi.Arena.enabled = 0
+#
+###################################################################################################
+###################################################################################################
+

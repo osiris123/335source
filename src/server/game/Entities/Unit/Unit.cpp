@@ -3928,20 +3928,27 @@ void Unit::RemoveAurasWithAttribute(uint32 flags)
 void Unit::RemoveNotOwnSingleTargetAuras(uint32 newPhase)
 {
     // single target auras from other casters
-    for (AuraApplicationMap::iterator iter = m_appliedAuras.begin(); iter != m_appliedAuras.end();)
+    // Iterate m_ownedAuras - aura is marked as single target in Unit::AddAura (and pushed to m_ownedAuras).
+    // m_appliedAuras will NOT contain the aura before first Unit::Update after adding it to m_ownedAuras.
+    // Quickly removing such an aura will lead to it not being unregistered from caster's single cast auras container
+    // leading to assertion failures if the aura was cast on a player that can
+    // (and is changing map at the point where this function is called).
+    // Such situation occurs when player is logging in inside an instance and fails the entry check for any reason.
+    // The aura that was loaded from db (indirectly, via linked casts) gets removed before it has a chance
+    // to register in m_appliedAuras
+	for (AuraMap::iterator iter = m_ownedAuras.begin(); iter != m_ownedAuras.end();)
     {
-        AuraApplication const* aurApp = iter->second;
-        Aura const* aura = aurApp->GetBase();
+		Aura const* aura = iter->second;
 
-        if (aura->GetCasterGUID() != GetGUID() && aura->GetSpellInfo()->IsSingleTarget())
+		if (aura->GetCasterGUID() != GetGUID() && aura->IsSingleTarget())
         {
             if (!newPhase)
-                RemoveAura(iter);
+				RemoveOwnedAura(iter);
             else
             {
                 Unit* caster = aura->GetCaster();
                 if (!caster || !caster->InSamePhase(newPhase))
-                    RemoveAura(iter);
+					RemoveOwnedAura(iter);
                 else
                     ++iter;
             }
@@ -17010,6 +17017,13 @@ void Unit::_EnterVehicle(Vehicle* vehicle, int8 seatId, AuraApplication const* a
         }
     }
 
+    // If vehicle flag for fixed position set (cannons), or if the following hardcoded units, then set state rooted
+    //  30236 | Argent Cannon
+    //  39759 | Tankbuster Cannon
+    if ((vehicle->GetVehicleInfo()->m_flags & VEHICLE_FLAG_FIXED_POSITION) || vehicle->GetBase()->GetEntry() == 30236 || vehicle->GetBase()->GetEntry() == 39759)
+        SetControlled(true, UNIT_STATE_ROOT);
+
+
     ASSERT(!m_vehicle);
     (void)vehicle->AddPassenger(this, seatId);
 }
@@ -17312,7 +17326,7 @@ void Unit::SendChangeCurrentVictimOpcode(HostileReference* pHostileReference)
         for (ThreatContainer::StorageType::const_iterator itr = tlist.begin(); itr != tlist.end(); ++itr)
         {
             data << (*itr)->getUnitGuid().WriteAsPacked();
-            data << uint32((*itr)->getThreat());
+			data << uint32((*itr)->getThreat() * 100);
         }
         SendMessageToSet(&data, false);
     }

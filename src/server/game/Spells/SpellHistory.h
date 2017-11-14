@@ -117,6 +117,9 @@ public:
     void BuildCooldownPacket(WorldPacket& data, uint8 flags, uint32 spellId, uint32 cooldown) const;
 
     CooldownStorageType::size_type GetCooldownsSizeForPacket() const { return _spellCooldowns.size(); }
+
+	void SaveCooldownStateBeforeDuel();
+	void RestoreCooldownStateAfterDuel();
     
 private:
     Player* GetPlayerOwner() const;
@@ -127,6 +130,7 @@ private:
 
     Unit* _owner;
     CooldownStorageType _spellCooldowns;
+	CooldownStorageType _spellCooldownsBeforeDuel;
     Clock::time_point _schoolLockouts[MAX_SPELL_SCHOOL];
     GlobalCooldownStorageType _globalCooldowns;
 

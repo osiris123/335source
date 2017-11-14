@@ -41,6 +41,7 @@ EndScriptData */
 #include "TicketMgr.h"
 #include "WardenCheckMgr.h"
 #include "WaypointManager.h"
+#include "../../scripts/Custom/TemplateNPC/TemplateNPC.h"
 
 class reload_commandscript : public CommandScript
 {
@@ -157,7 +158,9 @@ public:
             { "waypoint_data",                 rbac::RBAC_PERM_COMMAND_RELOAD_WAYPOINT_DATA,                    true,  &HandleReloadWpCommand,                         "", NULL },
             { "vehicle_accessory",             rbac::RBAC_PERM_COMMAND_RELOAD_VEHICLE_ACCESORY,                 true,  &HandleReloadVehicleAccessoryCommand,           "", NULL },
             { "vehicle_template_accessory",    rbac::RBAC_PERM_COMMAND_RELOAD_VEHICLE_TEMPLATE_ACCESSORY,       true,  &HandleReloadVehicleTemplateAccessoryCommand,   "", NULL },
-            { NULL,                            0,                                                               false, NULL,                                           "", NULL }
+			{ "template_npc",				   rbac::RBAC_PERM_COMMAND_RELOAD_TEMPLATE_NPC,						true,  &HandleReloadTemplateNPCCommand,				   "", NULL },
+			{ "chat_filter",                   rbac::RBAC_PERM_COMMAND_RELOAD_CHAT_FILTER,                      true, &HandleReloadLoadChatFilterCommand, "" },
+			{ NULL,                            0,                                                               false, NULL,                                           "", NULL }
         };
         static ChatCommand commandTable[] =
         {
@@ -188,8 +191,10 @@ public:
         HandleReloadAllGossipsCommand(handler, "");
         HandleReloadAllLocalesCommand(handler, "");
 
+		HandleReloadLoadChatFilterCommand(handler, "");
         HandleReloadAccessRequirementCommand(handler, "");
         HandleReloadMailLevelRewardCommand(handler, "");
+		HandleReloadLoadChatFilterCommand(handler, "");
         HandleReloadCommandCommand(handler, "");
         HandleReloadReservedNameCommand(handler, "");
         HandleReloadTrinityStringCommand(handler, "");
@@ -1152,6 +1157,28 @@ public:
         handler->SendGlobalGMSysMessage("RBAC data reloaded.");
         return true;
     }
+
+	static bool HandleReloadTemplateNPCCommand(ChatHandler * handler, const char* /*args*/)
+	{
+		TC_LOG_INFO("misc", "Reloading templates for Template NPC table...");
+		sTemplateNpcMgr->LoadTalentsContainer();
+		sTemplateNpcMgr->LoadGlyphsContainer();
+		sTemplateNpcMgr->LoadHumanGearContainer();
+		sTemplateNpcMgr->LoadAllianceGearContainer();
+		sTemplateNpcMgr->LoadHordeGearContainer();
+		handler->SendGlobalGMSysMessage("Template NPC templates reloaded.");
+		return true;
+
+	}
+
+	static bool HandleReloadLoadChatFilterCommand(ChatHandler* handler, char const* /*args*/)
+	{
+		TC_LOG_INFO("misc", "Reloading chat_filter table...");
+		sObjectMgr->LoadChatFilter();
+		handler->SendGlobalGMSysMessage("Chat Filter words reloaded.");
+		return true;
+	}
+
 };
 
 void AddSC_reload_commandscript()

@@ -3144,6 +3144,12 @@ void SpellMgr::LoadSpellInfoCorrections()
                 spellInfo->ProcCharges = 2;
                 spellInfo->StackAmount = 0;
                 break;
+			case 41406: // Positive Dementia
+			case 41409: // Negative Dementia (UNUSED)
+				spellInfo->DurationEntry = sSpellDurationStore.LookupEntry(21); // Infinite
+				spellInfo->ProcCharges = 10; // Stack up to 5 times
+                spellInfo->StackAmount = 10; // Stack up to 5 times
+				break;
             case 28200: // Ascendance (Talisman of Ascendance trinket)
                 spellInfo->ProcCharges = 6;
                 break;
@@ -3254,6 +3260,9 @@ void SpellMgr::LoadSpellInfoCorrections()
             case 12721: // Deep Wounds shouldnt ignore resillience or damage taken auras because its damage is not based off a spell.
                 spellInfo->AttributesEx4 = 0;
                 break;
+			case 24259: // Spell Lock silence
+				spellInfo->Speed = 80;
+				break;
             case 8145: // Tremor Totem (instant pulse)
             case 6474: // Earthbind Totem (instant pulse)
                 spellInfo->AttributesEx5 |= SPELL_ATTR5_START_PERIODIC_AT_APPLY;
@@ -3355,6 +3364,19 @@ void SpellMgr::LoadSpellInfoCorrections()
                 //! HACK: This spell break quest complete for alliance and on retail not used °_O
                 spellInfo->Effects[EFFECT_0].Effect = 0;
                 break;
+            // VIOLET HOLD SPELLS
+            //
+            case 54258: // Water Globule (Ichoron)
+            case 54264: // Water Globule (Ichoron)
+            case 54265: // Water Globule (Ichoron)
+            case 54266: // Water Globule (Ichoron)
+            case 54267: // Water Globule (Ichoron)
+                // in 3.3.5 there is only one radius in dbc which is 0 yards in this case
+                // use max radius from 4.3.4
+                spellInfo->Effects[EFFECT_0].RadiusEntry = sSpellRadiusStore.LookupEntry(EFFECT_RADIUS_25_YARDS);
+                break;
+            // ENDOF VIOLET HOLD
+            //
             // ULDUAR SPELLS
             //
             case 62374: // Pursued (Flame Leviathan)
